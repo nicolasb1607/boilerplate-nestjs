@@ -1,0 +1,30 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    restart: always
+    container_name: ${DATABASE_CONTAINER_NAME}
+    ports:
+      - "${DATABASE_PORT}:5432"
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    volumes:
+      - ${VOLUME_STORAGE}:/var/lib/postgresql/data
+
+  app:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      container_name: ${APP_CONTAINER_NAME}
+      ports:
+        - "${BACKEND_PORT}:3000"
+      depends_on:
+        - db
+      env_file:
+        - .env
+      environment:
+        DATABASE_HOST: db
+      
+volumes:
+  db:

@@ -1,0 +1,133 @@
+{
+  "name": "kompralo-backend",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/apps/api/main",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./apps/api/test/jest-e2e.json",
+    "seed": "npx mikro-orm seeder:create DatabaseSeeder && npx mikro-orm seeder:run",
+    "seed:fresh": "npx mikro-orm migration:fresh",
+    "mikroorm:debug": "npx mikro-orm debug --config ./libs/database/mikro-orm.config.ts",
+    "migrate": "rm -rf libs/database/migrations  && npx mikro-orm migration:create --config ./libs/database/mikro-orm.config.ts && npx mikro-orm migration:up --config ./libs/database/mikro-orm.config.ts"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.627.0",
+    "@aws-sdk/client-ses": "^3.624.0",
+    "@mikro-orm/core": "^6.3.4",
+    "@mikro-orm/nestjs": "^6.0.2",
+    "@mikro-orm/postgresql": "^6.3.4",
+    "@mikro-orm/reflection": "^6.3.4",
+    "@nestjs/axios": "^3.0.2",
+    "@nestjs/class-validator": "^0.13.4",
+    "@nestjs/common": "^10.3.10",
+    "@nestjs/config": "^3.2.3",
+    "@nestjs/core": "^10.3.10",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/passport": "^10.0.3",
+    "@nestjs/platform-express": "^10.3.10",
+    "@nestjs/swagger": "^7.4.0",
+    "@nestjs/throttler": "^6.1.0",
+    "axios": "^1.7.3",
+    "bcrypt": "^5.1.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "client-s3": "link:@types/aws-sdk/client-s3",
+    "client-ses": "link:@types/aws-sdk/client-ses",
+    "dotenv": "^16.4.5",
+    "joi": "^17.13.3",
+    "openai": "^4.55.4",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "pgvector": "^0.2.0",
+    "python-shell": "^5.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "sharp": "^0.33.4",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "@mikro-orm/cli": "^6.3.4",
+    "@mikro-orm/migrations": "^6.3.4",
+    "@mikro-orm/seeder": "^6.3.4",
+    "@nestjs/cli": "^10.4.4",
+    "@nestjs/schematics": "^10.1.3",
+    "@nestjs/testing": "^10.3.10",
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.14.15",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/passport-local": "^1.0.38",
+    "@types/python-shell": "^1.0.3",
+    "@types/sharp": "^0.32.0",
+    "@types/supertest": "^6.0.2",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.7.0",
+    "multer": "1.4.5-lts.1",
+    "prettier": "^3.3.3",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.4",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.5.4"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "**/*.(t|j)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/libs/",
+      "<rootDir>/apps/"
+    ],
+    "moduleNameMapper": {
+      "^@app/config(|/.*)$": "<rootDir>/libs/config/src/$1",
+      "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
+      "^@app/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
+      "^@app/python(|/.*)$": "<rootDir>/libs/python/src/$1",
+      "^@app/members-api(|/.*)$": "<rootDir>/libs/members-api/src/$1",
+      "^@app/open-ai(|/.*)$": "<rootDir>/libs/open-ai/src/$1",
+      "^@app/aws(|/.*)$": "<rootDir>/libs/aws/src/$1",
+      "^@app/aws-ses(|/.*)$": "<rootDir>/libs/aws-ses/src/$1"
+    }
+  },
+  "mikro-orm": {
+    "useTsNode": true,
+    "configPaths": [
+      "./libs/database/mikro-orm.config.ts"
+    ]
+  }
+}

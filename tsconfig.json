@@ -1,0 +1,66 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2022",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
+    "paths": {
+      "@app/config": [
+        "libs/config/src"
+      ],
+      "@app/config/*": [
+        "libs/config/src/*"
+      ],
+      "@app/database": [
+        "libs/database/src"
+      ],
+      "@app/database/*": [
+        "libs/database/src/*"
+      ],
+      "@app/auth": [
+        "libs/auth/src"
+      ],
+      "@app/auth/*": [
+        "libs/auth/src/*"
+      ],
+      "@app/python": [
+        "libs/python/src"
+      ],
+      "@app/python/*": [
+        "libs/python/src/*"
+      ],
+      "@app/open-ai": [
+        "libs/open-ai/src"
+      ],
+      "@app/open-ai/*": [
+        "libs/open-ai/src/*"
+      ],
+      "@app/aws-s3": [
+        "libs/aws-s3/src"
+      ],
+      "@app/aws-s3/*": [
+        "libs/aws-s3/src/*"
+      ],
+      "@app/aws-ses": [
+        "libs/aws-ses/src"
+      ],
+      "@app/aws-ses/*": [
+        "libs/aws-ses/src/*"
+      ]
+    }
+  }
+}
