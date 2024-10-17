@@ -5,12 +5,9 @@ import {
   UserRegistrationDto,
 } from '@app/auth';
 import { UserEntity, UserRepository } from '@app/database';
-import { ConstituencyRepository } from '@app/database/repositories/constituency.repository';
-import { InteractionRepository } from '@app/database/repositories/interation.repository';
 import { Injectable, Logger } from '@nestjs/common';
 import { SENDER_EMAIL } from 'apps/api/src/email/constants/email.contants';
 import { EmailService } from 'apps/api/src/email/email.service';
-import { MembersApiService } from 'apps/api/src/members-api/members-api.service';
 import { ApiException } from 'libs/shared/exceptions/api.exception';
 import { normalizeEmail } from 'libs/shared/functions/shared.functions';
 
@@ -19,12 +16,9 @@ export class AuthApiService {
   private readonly logger = new Logger(AuthApiService.name);
 
   constructor(
-    private readonly constituencyRepository: ConstituencyRepository,
     private readonly userRepository: UserRepository,
     public readonly authService: AuthService,
-    private readonly memberApiService: MembersApiService,
     private readonly emailService: EmailService,
-    private readonly interactionRepository: InteractionRepository,
   ) {}
 
   /****************************************************************************

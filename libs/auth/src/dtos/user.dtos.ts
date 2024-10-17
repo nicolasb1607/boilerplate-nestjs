@@ -7,6 +7,14 @@ import { IsDate, IsEmail, IsEnum } from 'class-validator';
 import { normalizeEmail } from 'libs/shared/functions/shared.functions';
 
 @Injectable()
+export class EmailDto {
+  @ApiProperty()
+  @IsEmail()
+  @Transform(({ value }) => normalizeEmail(value))
+  email!: string;
+}
+
+@Injectable()
 export class UserRegistrationDto {
   @ApiProperty()
   @IsNotEmpty()
