@@ -1,3 +1,6 @@
+import csv from 'csv-parser';
+import fs from 'fs';
+
 export async function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -30,4 +33,22 @@ export function normalizeEmail(email: string): string {
   normalized = `${cleanLocalPart}@${domain}`;
 
   return normalized;
+}
+
+export function parseBoolean(value: string): boolean {
+  return value.toLowerCase() === 'true';
+}
+
+export async function readCsvFile(
+  filePath: string,
+  separator: string,
+): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    fs.createReadStream(filePath)
+      .pipe(csv({ separator }))
+      .on('data', (data) => results.push(data))
+      .on('end', () => resolve(results))
+      .on('error', (err) => reject(err));
+  });
 }

@@ -9,6 +9,9 @@ export class JwtToken {
 
   @ApiProperty()
   refreshToken: string;
+
+  @ApiProperty()
+  expiresIn: number;
 }
 
 export interface JwtPayload {

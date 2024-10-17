@@ -16,5 +16,5 @@ export class HelloTemplatedEmail {
   sender: string;
 
   @ApiProperty()
-  receipient: UserInfos;
+  recipient: UserInfos;
 }

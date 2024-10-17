@@ -3,8 +3,9 @@ import {
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiException } from 'libs/shared/exceptions/api.exception';
 import sharp from 'sharp';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class AwsS3Service {
   private readonly s3Client: S3Client;
   private readonly bucketName: string;
   private readonly region: string;
+  private readonly logger = new Logger(AwsS3Service.name);
 
   constructor(private readonly configService: ConfigService) {
     this.bucketName = this.configService.get<string>('BUCKET_NAME');
@@ -37,10 +39,10 @@ export class AwsS3Service {
         }),
       );
 
-      return `https://${this.bucketName}.s3.${this.region}.amazonaws.com/${fileName}`;
+      return `https://s3.${this.region}.amazonaws.com/${this.bucketName}/${fileName}`;
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException(e);
+      this.logger.error('uploadImage = ' + e);
+      throw new ApiException('Failed to upload image', e);
     }
   }
 
@@ -55,8 +57,8 @@ export class AwsS3Service {
         }),
       );
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException(e);
+      this.logger.error('deleteImage = ' + e);
+      throw new ApiException('Failed to delete image', e);
     }
   }
 

@@ -55,8 +55,13 @@ export class UserLoginDto {
   @Transform(({ value }) => normalizeEmail(value))
   email!: string;
 
+  //@ApiProperty()
+  //@IsNotEmpty()
+  //@IsString()
+  //password!: string;
+
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  password!: string;
+  code!: string;
 }

@@ -1,6 +1,7 @@
 import { EncodingFormat } from '@app/open-ai/types/openAi.types';
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ApiException } from 'libs/shared/exceptions/api.exception';
 import OpenAI from 'openai';
 import { ChatCompletion, CreateEmbeddingResponse } from 'openai/resources';
 
@@ -14,6 +15,7 @@ export class OpenAiService {
   private readonly temperature: number;
   private readonly encodingFormat: EncodingFormat;
   private readonly embeddingModel: string;
+  private readonly logger = new Logger(OpenAiService.name);
 
   constructor(private readonly configService: ConfigService) {
     this.apiKey = this.configService.get<string>('OPEN_AI_API_KEY');
@@ -53,10 +55,8 @@ export class OpenAiService {
         response_format: json_format ? { type: 'json_object' } : null,
       });
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException(
-        'OpenAi: Failed to generate chat completion',
-      );
+      this.logger.error('generateText = ' + e);
+      throw new ApiException('Failed to generate chat completion', e);
     }
   }
 
@@ -71,10 +71,92 @@ export class OpenAiService {
         encoding_format: this.encodingFormat,
       });
     } catch (e) {
-      console.log(e);
-      throw new InternalServerErrorException(
-        'OpenAi: Failed to generate embedding',
-      );
+      this.logger.error('generateEmbedding = ' + e);
+      throw new ApiException('Failed to generate embedding', e);
     }
+  }
+
+  //Assistant Beta
+
+  public async createAssistant(
+    assistantName: string,
+    instructions: string,
+    tools: any[],
+  ) {
+    try {
+      const assistant = await this.openAI.beta.assistants.create({
+        name: assistantName,
+        instructions: instructions,
+        tools: tools,
+        model: this.model,
+      });
+      return assistant;
+    } catch (e) {
+      throw new ApiException('Failed to create Assistant', e);
+    }
+  }
+
+  public async createThread() {
+    try {
+      const thread = await this.openAI.beta.threads.create();
+      return thread;
+    } catch (e) {
+      this.logger.error('createThread = ' + e);
+      throw new ApiException('Failed to create thread', e);
+    }
+  }
+
+  public async addMessageToThread(threadId: string, userContent: string) {
+    try {
+      const message = await this.openAI.beta.threads.messages.create(threadId, {
+        role: 'user',
+        content: userContent,
+      });
+      this.logger.log('Message added: ' + JSON.stringify(message));
+      return message;
+    } catch (e) {
+      this.logger.error('addMessageToThread = ' + e);
+      throw new ApiException('Failed to add message to thread', e);
+    }
+  }
+
+  public async runAssistantOnThread(threadId: string, assistantId: string) {
+    try {
+      const run = await this.openAI.beta.threads.runs.create(threadId, {
+        assistant_id: assistantId,
+      });
+      return run;
+    } catch (e) {
+      this.logger.error('runAssistantOnThread = ' + e);
+      throw new ApiException('Failed to run assistant on thread', e);
+    }
+  }
+
+  public async pollRunCompletion(
+    threadId: string,
+    runId: string,
+  ): Promise<any> {
+    const pollInterval = 1000;
+    const maxRetries = 60;
+
+    for (let retry = 0; retry < maxRetries; retry++) {
+      const run = await this.openAI.beta.threads.runs.retrieve(threadId, runId);
+      if (run.status === 'completed') {
+        return await this.openAI.beta.threads.messages.list(threadId);
+      }
+      if (run.status === 'failed') {
+        throw new ApiException(
+          `Assistant run failed with error`,
+          run.last_error,
+        );
+      }
+      await this.sleep(pollInterval);
+    }
+
+    throw new Error('Assistant run timed out.');
+  }
+
+  private sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
