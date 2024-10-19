@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DatabaseService } from './database.service';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { MikroOrmModule, MikroOrmModuleOptions } from '@mikro-orm/nestjs';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
+import { ConfigModule } from '@app/config';
 
 @Module({
   imports: [

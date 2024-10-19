@@ -35,8 +35,39 @@ export function normalizeEmail(email: string): string {
   return normalized;
 }
 
-export function parseBoolean(value: string): boolean {
-  return value.toLowerCase() === 'true';
+export function parseBoolean(
+  value: unknown,
+  defaultValue: boolean = false,
+): boolean {
+  switch (typeof value) {
+    case 'boolean':
+      return value;
+
+    case 'number':
+      return value === 1;
+
+    case 'string': {
+      const normalized = value.toLowerCase().trim();
+      switch (normalized) {
+        case 'true':
+        case '1':
+        case 'yes':
+          return true;
+        case 'false':
+        case '0':
+        case 'no':
+          return false;
+        default:
+          return defaultValue;
+      }
+    }
+
+    case 'undefined':
+      return defaultValue;
+
+    default:
+      return value === null ? defaultValue : false;
+  }
 }
 
 export async function readCsvFile(

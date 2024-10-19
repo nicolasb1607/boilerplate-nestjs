@@ -27,7 +27,7 @@ export const validationSchema = Joi.object({
   OPEN_AI_TEMPERATURE: Joi.number().optional().default(1),
   OPEN_AI_MAX_TOKEN: Joi.string().required(),
   OPEN_AI_ENCODING_FORMAT: Joi.string()
-    .valid(['float', 'base64'])
+    .valid('float', 'base64')
     .optional()
     .default('float'),
   //AWS
