@@ -21,25 +21,23 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-3
 
+    - name: Load SSH Private Key
+      uses: webfactory/ssh-agent@v0.5.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
     - name: Deploy to private EC2 using Bastion Host
       env:
         BASTION_IP: ${{ vars.BASTION_IP }}
         EC2_IP: ${{ vars.EC2_IP }}
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        # Add the private key to the agent
-        echo $BASTION_IP
-        touch ./private_key.pem
-        echo "$SSH_PRIVATE_KEY" > ./private_key.pem
-        chmod 600 private_key.pem
-
         # Connect to the Bastion Host and deploy to the private EC2 instance
-        ssh -o StrictHostKeyChecking=no -i ./private_key.pem ec2-user@$BASTION_IP '
-          ssh -o StrictHostKeyChecking=no -i ./private_key.pem ec2-user@$EC2_IP "
+        ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP '
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "
             mkdir -p /app && rm -rf /app/* && exit
           "
-          scp -r -o StrictHostKeyChecking=no -i ./private_key.pem . ec2-user@$EC2_IP:/app
-          ssh -o StrictHostKeyChecking=no -i ./private_key.pem ec2-user@$EC2_IP "
+          scp -r -o StrictHostKeyChecking=no . ec2-user@$EC2_IP:/app
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "
             cd /app
             npm install -g pnpm
             pnpm install
@@ -47,4 +45,3 @@ jobs:
             pnpm run start:prod
           "
         '
-
