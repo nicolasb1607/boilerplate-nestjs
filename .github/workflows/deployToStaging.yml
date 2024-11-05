@@ -33,5 +33,5 @@ jobs:
       run: |
         # Connect to the Bastion Host and deploy to the private EC2 instance
         ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP "
-          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP 
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "echo hello world"
         "
