@@ -17,79 +17,28 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: "YOUR_AWS_ACCESS_KEY_ID"
-        aws-secret-access-key: "YOUR_AWS_SECRET_ACCESS_KEY"
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-west-3
 
     - name: Deploy to private EC2 using Bastion Host
+      env:
+        BASTION_IP: ${{ vars.BASTION_IP }}
+        EC2_IP: ${{ vars.EC2_IP }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        # Save the SSH private key
-        echo "-----BEGIN RSA PRIVATE KEY-----
-MIIJKQIBAAKCAgEAyT4XeUjEqnX0PFGbspgjGVYvKTbrAce9KSYp1jxFeG+If5tu
-HyI3i+Y1vEMXMYdWJEMyNu4PlQYQVuoY9hRS4lBGqGyk7wrzu6+dsJgyi6T+XT2n
-GDjqvqw9lCgLFckkqauU6aLGo6kVWzfFhLh5yp3sPAoGmxzitDu2SALjUsm95NGW
-Wgi+kI0bif2aQsGlrj5sunRRFK9qNdYBuKyBbuLZqBc64k9PuLFzWTEdP3ovBo3p
-L9DCHuHw0+ZlWT0tqF8w1ckjR7uL6SBuxTM4fyHu2d6ceovOhaMjuJCZg1jtnkZF
-vvdAtuNba0t0ViqbKCVYUaDHqjdtM2g3+z4owbKSjjCz18zLbcCzvzNpXyGb0i4V
-xzpVZ0Wrq/DwHsyYMGqgFHEBE/X9FUbePC2bBbAh7cAWDdqBKR7MMkCJhJXEHa3T
-yfZBNYwVNZoIlVYrCPyMBd/xo+bq6QZ8Y2BjNxe/JkzH9eaQq3tsFUJB7Qt0Xop4
-B1kp6eN2TE6s9/o3OVHyXe/HTMBHHUIHYS1lNJBDb0jEE35NEQLdqb3yjIJ1mOD6
-LpxUNCBj9kRDbHTyk5jynAx5LOaMD2FdcepySvTyEIuWU59mg1KBprD/OA2gP/DO
-Cj0fs5Rn4SBEHXS2mjgAnuULNN9UFfj9Oe6s0G3Ythw80ogQXKk29G4nLvcCAwEA
-AQKCAgBixjYxUnUtEZ4iKRAZtbCsk++r9AefJRGEa/Xm8EhM17mQoJKJd3r6ELFZ
-STjOF5ZBUDYKXgiJ5aMJdfdweQNBj5NOwZyms6J0AbuNXPaaMg6jZ0pnijA2DEZh
-PNJMDCERomUB0+JZm/kef55UCVPGDoNP6L/bTG89dX1/lONM1DZ/ZBu+70HRo2Db
-9vzLPU772in1znephnvEFtlbclhJO9EHPveo8rK3fWmXYpLvgCIqvmaxEG7nR5C0
-AQbHqU6KsMZAeGv3nmcKst+LrRtS0y3wA+KcB5kDYNJ8mYSvwmtG30kGdUdvPOK3
-JB7i2CC1sLbLwfWeZ3wS2ll32MeZhBYchmhK1NvNA3s/jfGG5cyNPUksY6OvdaeI
-JX4fqJ6RoAHTEljMppJLEpPoJSG5SzQ5/W2A4BOsS/9EQ8Xe+1CZZUZMfB8CYv5v
-er8p3cIUjtSNu0mKuGCXXNRwwHdhpjToIRkMuAsDA9SZBQh5fdSDOzm7C8szX/Hb
-VyH+e+OOns5i9A1A6RnMvP2iMBH8v69LHQXSYj0BuZQF+CFoVFSbOqN6EPuGQbck
-D0UMGYD0Ridvt77tMiKEENurh6Dc+WHbjr9+ZFgtDhrQsmv0GhssWC91QzGtceh0
-HSn0Rpe4Ct/pZa3rMJYHvL9XxbIPR2un75zFGeGBbyrLq/tvmQKCAQEA3iCh8v5+
-Jr/VJ8U1mrci/84iPU4NmA5LFbeGxRySsqCt5JSq2dBh2sx0AIJvKcYxV6s+Kbp9
-0uIt4DyHdYzV8J03vArtzDQ2InYNpuhDZkAuPUnbfCJcF/lNqYEhG6msccWtgFb0
-gElrV6p7EsCx1zlg7G2vU7Jqj3ckQcaxM1KyLSiYaHZEoqtrYeRPeQqZWVErz1wU
-RPDBMvgAUh4ddws8GKzG1XCv7NZMr74nyZ0fC0y2sh1U2YFHWTBWlCSMJAyVYaxi
-W+tuqyWXRKQn9AQhtTep0Kp9o2zh8jWJHEpovM6Asl0WCeRArw0+uB1jUxcqK/EP
-WHGOvM0MnJkKCwKCAQEA5+4oVtnEJ9OyY3b4HTpZjUl1AF4WR6d0W0F6rUC0U1h3
-RhIjAW3G6BzrcNlZDUVqHdRW7snI87p7oAIVfeRtP7mA4YMQ8QQ3KV/Zw6gmegNd
-Me5dzYcc8djdt7GTIpsTXr/v/AwsU6ZSad+ZVDijTmnr2SHf9rW3H68RcMJ7epQg
-nq4T+srP/V7oymZC1aB7q31jG0xCK5LLtHFBxNefF4lnabnt69G8PCtSSdZk10m5
-7Sju3q3XKsTvr53RyFhrvFExBJB45KCT6lTFmUCQowK1BNvNgVNPfcZFk1oN18xF
-Uy5T23HkTZuiTPoXpf78+U6foDJCAchec6yI/LyuRQKCAQEAyYRRaGH5kK34c1w2
-hWYgGnKoHXXyX0CYXdtiKPEDJYsgN3+ogHLMU/OoSc4Li5qCqUZx3umRvP/1HrnL
-KpnafbAkIDTKB7hWZG01dXbBrsILMQ8QUE3bvuQt0NmVb8M+7vinrwc0Si5Rc/b2
-MM0gimFDzTq1FPmIMx+jhQj9OdKMUuvBWQPywKFDikvWzbkP5jf9xuGCggjpPZRA
-tj8b/CP1IW2d9YWGFRdV+xpIfmBNCbNPC8gQckMWt5Ni+IMvoITKARKjKUEt5Zb0
-5REILhiRfBZDuUrzMJBXa6Wl/kSDQMcXerl4hQDOrgEWJXKD6Z3aZIMNqO9cz2w3
-RNqSgQKCAQAF5G4P7s5l+KHilwYsr+vQhBo93SYRwfZZzysPtcIfD/NPy2wqQCC6
-iumMX2k8xhOxGFDxFh1N2+ICKatkHGaOJOdaU1sd1G6WVYIRz3bSyL0YZKbrbtBU
-cJ8JaLCFQ41Vbejp7WE+6s3TNMQPeLTlbBl61bp76Rfy7chQFHRkdyQ3UuLhjsL2
-Yc1+OB0b3BBZzgjPehNRqtPvDiD6Jkfs7ZX9YoPvTFnRq7r+L4/xsaBOV6LEozhz
-r6XbpZnA4G9uAKs30HLr1/FaUPNOnj1ZG/Xcs20HZqHegVC8gjTMIq4DzBqsHTQa
-h95vgm1y2MA1KCSYr3UBun4Tj6iXYQ==
------END RSA PRIVATE KEY-----" > private_key.pem
+        # Add the private key to the agent
+        echo "$SSH_PRIVATE_KEY"
+        touch private_key.pem
+        echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
 
-        # Define Bastion and EC2 IPs
-        BASTION_IP="15.236.247.187"
-        EC2_IP="10.0.10.253"
-
         # Connect to the Bastion Host and deploy to the private EC2 instance
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$BASTION_IP <<'EOF'
-          # Copy the SSH key to the EC2 instance
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP "mkdir -p ~/.ssh && cat > ~/.ssh/authorized_keys" < private_key.pem
-
-          # Clear and update the /app directory on the EC2 instance
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$BASTION_IP '
           ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP "
             mkdir -p /app && rm -rf /app/* && exit
           "
-
-          # Copy application files to the EC2 instance
           scp -r -o StrictHostKeyChecking=no -i private_key.pem . ec2-user@$EC2_IP:/app
-
-          # Install and start the application
           ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP "
             cd /app
             npm install -g pnpm
@@ -97,4 +46,5 @@ h95vgm1y2MA1KCSYr3UBun4Tj6iXYQ==
             pnpm run build
             pnpm run start:prod
           "
-        EOF
+        '
+
