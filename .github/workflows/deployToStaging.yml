@@ -32,4 +32,16 @@ jobs:
         EC2_IP: ${{ vars.EC2_IP }}
       run: |
         # Connect to the Bastion Host and deploy to the private EC2 instance
-        ssh -o StrictHostKeyChecking=no $BASTION_IP
+        ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP '
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "
+            mkdir -p /app && rm -rf /app/* && exit
+          "
+          scp -r -o StrictHostKeyChecking=no . ec2-user@$EC2_IP:/app
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "
+            cd /app
+            npm install -g pnpm
+            pnpm install
+            pnpm run build
+            pnpm run start:prod
+          "
+        '
