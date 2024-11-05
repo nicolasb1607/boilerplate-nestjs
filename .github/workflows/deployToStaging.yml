@@ -28,7 +28,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         # Add the private key to the agent
-        echo "$SSH_PRIVATE_KEY"
+        echo $BASTION_IP
         touch private_key.pem
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
