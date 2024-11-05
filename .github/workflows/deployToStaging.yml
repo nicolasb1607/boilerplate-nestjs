@@ -32,4 +32,6 @@ jobs:
         EC2_IP: ${{ vars.EC2_IP }}
       run: |
         # Connect to the Bastion Host and deploy to the private EC2 instance
-        ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP "echo 'Hello World'"
+        ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP "
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP 
+        "
