@@ -1,0 +1,47 @@
+name: Deploy to staging AWS
+on:
+  push:
+    branches:
+      - staging
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/chechout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: eu-west-3
+      
+      - name: Deploy to private EC2 using Bastion Host
+        env:
+          BASTION_IP: ${{secrets.BASTION_IP}}
+          EC2_IP: ${{secrets.EC2_IP}}
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+        run: |
+        # Add the private key to the agent
+        echo "$SSH_PRIVATE_KEY" > private_key.pem
+        chmod 600 private_key.pem
+
+        # Connect to the Bastion Host and deploy to the private EC2 instance
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$BASTION__IP '
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP "
+            mkdir -p /app && rm -rf /app/* && exit
+          "
+          scp -r -o StrictHostKeyChecking=no -i private_key.pem . ec2-user@$PRIVATE_EC2_IP:/app
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$PRIVATE_EC2_IP "
+            cd /app
+            npm install -g pnpm
+            pnpm install
+            pnpm run build
+            pnpm run start:prod
+          "
+        '
+          
+

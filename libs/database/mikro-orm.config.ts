@@ -1,9 +1,10 @@
 import { Options } from '@mikro-orm/core';
+import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
 import { PostgreSqlDriver } from '@mikro-orm/postgresql';
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
-import { Migrator, TSMigrationGenerator } from '@mikro-orm/migrations';
-import 'dotenv/config';
 import { SeedManager } from '@mikro-orm/seeder';
+import 'dotenv/config';
+import { parseBoolean } from 'libs/shared/functions/shared.functions';
 
 const config: Options = {
   driver: PostgreSqlDriver,
@@ -38,14 +39,14 @@ const config: Options = {
     fileName: (className: string) => className,
   },
   driverOptions:
-    process.env.SSL_CONNECTION == true
+    parseBoolean(process.env.SSL_CONNECTION) == true
       ? {
-        connection: {
-          ssl: {
-            rejectUnauthorized: false,
+          connection: {
+            ssl: {
+              rejectUnauthorized: false,
+            },
           },
-        },
-      }
+        }
       : undefined,
 };
 

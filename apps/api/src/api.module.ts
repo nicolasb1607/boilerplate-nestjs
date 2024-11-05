@@ -10,7 +10,7 @@ import { AuthApiModule } from './auth-api/auth-api.module';
 import { OpenAiModule } from '@app/open-ai';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { EmailModule } from './email/email.module';
-import { ApiController } from './api/api.controller';
+import { ApiController } from 'apps/api/src/api.controller';
 
 @Module({
   imports: [
