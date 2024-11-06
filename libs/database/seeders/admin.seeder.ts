@@ -9,24 +9,8 @@ export class AdminSeeder extends Seeder {
     const admin1 = em.upsert(UserEntity, {
       firstName: 'Nicolas',
       lastName: 'Burat de Gurgy',
-      email: 'nicolas@state.com',
-      password: await bcrypt.hash('adminpsswrd', 10),
-      role: Role.Admin,
-      verified: true,
-    });
-    const admin2 = em.upsert(UserEntity, {
-      firstName: 'Aurelien',
-      lastName: 'Nicolle',
-      email: 'aurelien@state.com',
-      password: await bcrypt.hash('adminpsswrd', 10),
-      role: Role.Admin,
-      verified: true,
-    });
-    const admin3 = em.upsert(UserEntity, {
-      firstName: 'Aurelien',
-      lastName: 'Nicolle',
-      email: 'galina@state.com',
-      password: await bcrypt.hash('adminpsswrd', 10),
+      email: 'nicolasburat1607@gmail.com',
+      password: await bcrypt.hash('adminpassword', 10),
       role: Role.Admin,
       verified: true,
     });

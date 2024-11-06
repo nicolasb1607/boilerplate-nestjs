@@ -28,8 +28,8 @@ jobs:
 
     - name: Deploy to private EC2 using Bastion Host
       env:
-        BASTION_IP: ${{ vars.BASTION_IP }}
-        EC2_IP: ${{ vars.EC2_IP }}
+        BASTION_IP: ${{ secrets.BASTION_IP }}
+        EC2_IP: ${{ secrets.EC2_IP }}
       run: |
         # Connect to the Bastion Host and deploy to the private EC2 instance
         ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP `ssh -o StrictHostKeyChecking=no -i private_key.pem ec2-user@$EC2_IP 'echo helloWorld' && exit`
