@@ -31,9 +31,9 @@ jobs:
         BASTION_IP: ${{ secrets.BASTION_IP }}
         EC2_IP: ${{ secrets.EC2_IP }}
       run: |
-        ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP bash -c "'
-          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP <<EOF
+        ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP << 'EOF'
+          ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP << 'EOF2'
             mkdir -p ./app
-          EOF
-        '"
+          EOF2
+        EOF
 
