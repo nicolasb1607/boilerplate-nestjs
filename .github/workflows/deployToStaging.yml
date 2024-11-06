@@ -31,5 +31,4 @@ jobs:
         BASTION_IP: ${{ secrets.BASTION_IP }}
         EC2_IP: ${{ secrets.EC2_IP }}
       run: |
-        scp -r -o StrictHostKeyChecking=no ./* ec2-user@$BASTION_IP:./app
-        ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP "echo 'hello world'"
+        ssh -o ProxyCommand="ssh ec2-user@$BASTION_IP -W %h:%p" ec2-user@$EC2_IP "mkdir ./testproxy"
