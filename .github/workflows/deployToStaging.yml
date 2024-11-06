@@ -33,7 +33,7 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP `
           ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "
-            mkdir -p ./app
+            mkdir -p ./app && exit
           "
           `
 
