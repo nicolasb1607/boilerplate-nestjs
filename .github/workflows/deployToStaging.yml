@@ -32,4 +32,4 @@ jobs:
         EC2_IP: ${{ secrets.EC2_IP }}
       run: |
         #ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ec2-user@$EC2_IP "mkdir -p ./app && exit"
-        scp -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ./* ec2-user@$EC2_IP:./app
+        scp -r -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ./* ec2-user@$EC2_IP:./app
