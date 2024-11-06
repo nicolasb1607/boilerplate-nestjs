@@ -33,5 +33,7 @@ jobs:
       run: |
         # Connect to the bastion host and forward the connection to the private EC2 instance
           ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP << EOF
-            ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP "echo helloWorld"
+            ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP << 'INNER_EOF'
+              mkdir ./app 
+            INNER_EOF
           EOF
