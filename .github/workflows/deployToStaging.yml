@@ -34,4 +34,4 @@ jobs:
         ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP \
          "ssh -o StrictHostKeyChecking=no ec2-user@$EC2_IP \
           'mkdir -p ./app && rm -rf ./app/* && exit'"
-        scp -r -o StrictHostKeyChecking=no . ec2-user@$BASTION_IP:./app
+        ls -la        
