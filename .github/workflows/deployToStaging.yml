@@ -31,4 +31,5 @@ jobs:
         BASTION_IP: ${{ secrets.BASTION_IP }}
         EC2_IP: ${{ secrets.EC2_IP }}
       run: |
-        ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP 'scp -r -o StrictHostKeyChecking=no . ec2-user@$BASTION_IP:/app'
+        scp -r -o StrictHostKeyChecking=no . ec2-user@$BASTION_IP:/app
+        ssh -o StrictHostKeyChecking=no -A ec2-user@$BASTION_IP "echo 'hello world'"
