@@ -1,0 +1,10 @@
+name: boilerplate-nestjs
+description: Indra AWS pour boilerplate nest js
+runtime:
+  name: nodejs
+  options:
+    packagemanager: pnpm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript

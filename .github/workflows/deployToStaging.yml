@@ -34,4 +34,8 @@ jobs:
         ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ec2-user@$EC2_IP "mkdir -p ./app && rm -rf ./app/*"
         scp -r -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ./* ec2-user@$EC2_IP:./app
         ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ec2-user@$EC2_IP \
-          "cd ./app && npm install -g pnpm && pnpm install && pnpm run build && pnpm run start:prod"
+          "cd ./app \
+          && npm install -g pnpm \
+          && pnpm install \
+          && pnpm run build \
+          && pnpm run start:prod"
