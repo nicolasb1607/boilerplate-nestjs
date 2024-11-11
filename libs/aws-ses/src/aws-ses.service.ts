@@ -1,16 +1,16 @@
+import {
+    CreateTemplateCommand,
+    CreateTemplateRequest,
+    SendEmailCommand,
+    SendEmailRequest,
+    SendTemplatedEmailCommand,
+    SendTemplatedEmailRequest,
+    SESClient,
+    UpdateTemplateCommand,
+    UpdateTemplateRequest,
+} from '@aws-sdk/client-ses';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {
-  CreateTemplateCommand,
-  CreateTemplateRequest,
-  SendEmailCommand,
-  SendEmailRequest,
-  SendTemplatedEmailCommand,
-  SendTemplatedEmailRequest,
-  SESClient,
-  UpdateTemplateCommand,
-  UpdateTemplateRequest,
-} from '@aws-sdk/client-ses';
 import { ApiException } from 'libs/shared/exceptions/api.exception';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class AwsSesService {
   private readonly sesClient: SESClient;
 
   constructor(private readonly configService: ConfigService) {
-    this.region = this.configService.get<string>('AWS_S3_REGION');
+    this.region = this.configService.get<string>('AWS_REGION');
     this.sesClient = new SESClient({ region: this.region });
   }
 

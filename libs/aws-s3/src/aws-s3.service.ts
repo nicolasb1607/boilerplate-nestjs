@@ -1,7 +1,7 @@
 import {
-	DeleteObjectCommand,
-	PutObjectCommand,
-	S3Client,
+    DeleteObjectCommand,
+    PutObjectCommand,
+    S3Client,
 } from '@aws-sdk/client-s3';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -17,7 +17,7 @@ export class AwsS3Service {
 
         constructor(private readonly configService: ConfigService) {
                 this.bucketName = this.configService.get<string>('BUCKET_NAME');
-                this.region = this.configService.get<string>('AWS_S3_REGION');
+                this.region = this.configService.get<string>('AWS_REGION');
                 this.s3Client = new S3Client({ region: this.region });
         }
 

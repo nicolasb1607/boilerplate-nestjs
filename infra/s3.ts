@@ -14,7 +14,7 @@ export const bucket = new aws.s3.Bucket(
 export const bucketName = bucket.id;
 
 export const ownershipControls = new aws.s3.BucketOwnershipControls(
-    'ownership-controls',
+    `${config.stack}-ownership-controls`,
     {
         bucket: bucketName,
         rule: {

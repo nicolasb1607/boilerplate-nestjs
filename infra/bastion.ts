@@ -3,25 +3,24 @@ import * as tls from '@pulumi/tls';
 import * as config from './config';
 import * as vpc from './vpc';
 
-export const ami = aws.ec2.getAmiOutput({
-    filters: [
-        {
-            name: 'name',
-            values: ['amzn2-ami-hvm-*-x86_64-gp2'],
-        },
-    ],
-    owners: ['amazon'],
-    mostRecent: true,
-});
-
-export const sshKey = new tls.PrivateKey(
-    `${config.stack}-bastion-key`,
+export const ami = aws.ec2.getAmiOutput(
     {
-        algorithm: 'RSA',
-        rsaBits: 4096,
+        filters: [
+            {
+                name: 'name',
+                values: ['amzn2-ami-hvm-*-x86_64-gp2'],
+            },
+        ],
+        owners: ['amazon'],
+        mostRecent: true,
     },
     config.defaultProvider,
 );
+
+export const sshKey = new tls.PrivateKey(`${config.stack}-bastion-key`, {
+    algorithm: 'RSA',
+    rsaBits: 4096,
+});
 
 export const publicKey = sshKey.publicKeyOpenssh;
 

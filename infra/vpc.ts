@@ -31,7 +31,7 @@ export const publicSubnet1 = new aws.ec2.Subnet(
     {
         vpcId: vpcStaging.id,
         cidrBlock: '10.0.1.0/24',
-        availabilityZone: 'eu-west-3a',
+        availabilityZone: `${config.awsRegion}a`,
         mapPublicIpOnLaunch: true,
         tags: {
             Name: `${config.stack}-public-subnet1`,
@@ -46,7 +46,7 @@ export const publicSubnet2 = new aws.ec2.Subnet(
     {
         vpcId: vpcStaging.id,
         cidrBlock: '10.0.2.0/24',
-        availabilityZone: 'eu-west-3b',
+        availabilityZone: `${config.awsRegion}b`,
         mapPublicIpOnLaunch: true,
         tags: {
             Name: `${config.stack}-public-subnet2`,
@@ -61,7 +61,7 @@ export const privateSubnet1 = new aws.ec2.Subnet(
     {
         vpcId: vpcStaging.id,
         cidrBlock: '10.0.10.0/24',
-        availabilityZone: 'eu-west-3a',
+        availabilityZone: `${config.awsRegion}a`,
         tags: {
             Name: `${config.stack}-private-subnet1`,
             Type: 'Private',
@@ -75,7 +75,7 @@ export const privateSubnet2 = new aws.ec2.Subnet(
     {
         vpcId: vpcStaging.id,
         cidrBlock: '10.0.11.0/24',
-        availabilityZone: 'eu-west-3b',
+        availabilityZone: `${config.awsRegion}b`,
         tags: {
             Name: `${config.stack}-private-subnet2`,
             Type: 'Private',

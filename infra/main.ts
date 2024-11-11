@@ -4,13 +4,14 @@ import * as bastion from './bastion';
 import * as ec2 from './ec2';
 import * as rds from './rds';
 import * as vpc from './vpc';
+import * as config from './config';
 
 export const vpcId = vpc.vpcStaging.tags;
 
 //Bastion
 export const bastionIp = bastion.bastionEc2.publicIp;
 bastion.sshKey.privateKeyPem.apply((privateKey) => {
-    const keyPath = path.join(process.cwd(), 'staging-bastion.pem');
+    const keyPath = path.join(process.cwd(), `${config.stack}-bastion.pem`);
     fs.writeFileSync(keyPath, privateKey);
     fs.chmodSync(keyPath, '600');
     console.log(`Private key saved to: ${keyPath}`);
