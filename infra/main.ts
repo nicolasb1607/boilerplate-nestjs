@@ -10,11 +10,11 @@ export const vpcId = vpc.vpcStaging.tags;
 //Bastion
 export const bastionIp = bastion.bastionEc2.publicIp;
 bastion.sshKey.privateKeyPem.apply((privateKey) => {
-  const keyPath = path.join(process.cwd(), 'staging-bastion.pem');
-  fs.writeFileSync(keyPath, privateKey);
-  fs.chmodSync(keyPath, '600');
-  console.log(`Private key saved to: ${keyPath}`);
-  return privateKey;
+    const keyPath = path.join(process.cwd(), 'staging-bastion.pem');
+    fs.writeFileSync(keyPath, privateKey);
+    fs.chmodSync(keyPath, '600');
+    console.log(`Private key saved to: ${keyPath}`);
+    return privateKey;
 });
 export const keyPairPublicKey = bastion.ec2KeyPair.publicKey;
 
@@ -25,5 +25,5 @@ export const ec2Ip = ec2.instance.privateIp;
 export const rdsDbName = rds.postgresDB.dbName;
 export const rdsUsername = rds.postgresDB.username;
 export const rdsPassword = rds.postgresDB.password.apply((password) =>
-  console.log(password),
+    console.log(password),
 );

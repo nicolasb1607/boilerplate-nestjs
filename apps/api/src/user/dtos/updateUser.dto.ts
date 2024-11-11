@@ -7,37 +7,37 @@ import { IsDate, IsEnum, IsOptional } from 'class-validator';
 
 @Injectable()
 export class UpdateUserDto {
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  firstName?: string;
+        @ApiProperty()
+        @IsOptional()
+        @IsString()
+        @IsNotEmpty()
+        firstName?: string;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  lastName?: string;
+        @ApiProperty()
+        @IsOptional()
+        @IsString()
+        @IsNotEmpty()
+        lastName?: string;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  dateOfBirth?: Date;
+        @ApiProperty()
+        @IsOptional()
+        @IsDate()
+        @Type(() => Date)
+        dateOfBirth?: Date;
 
-  @ApiProperty({ enum: IdentityEnum })
-  @IsOptional()
-  @IsEnum(IdentityEnum)
-  identity?: IdentityEnum;
+        @ApiProperty({ enum: IdentityEnum })
+        @IsOptional()
+        @IsEnum(IdentityEnum)
+        identity?: IdentityEnum;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  postcode?: string;
+        @ApiProperty()
+        @IsOptional()
+        @IsString()
+        postcode?: string;
 
-  @ApiProperty()
-  @IsOptional()
-  @IsNotEmpty()
-  @IsString()
-  address?: string;
+        @ApiProperty()
+        @IsOptional()
+        @IsNotEmpty()
+        @IsString()
+        address?: string;
 }

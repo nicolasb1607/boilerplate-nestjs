@@ -9,22 +9,22 @@ import { RedisModule } from 'libs/redis/src';
 import { AuthService } from './auth.service';
 
 @Module({
-  imports: [
-    MikroOrmModule.forFeature([UserEntity]),
-    DatabaseModule,
-    RedisModule,
-  ],
-  providers: [
-    //Services
-    AuthService,
-    JwtService,
-    //Strategies
-    JwtStrategy,
-    //Guards Globally applied
-    JwtAuthGuard,
-    RolesGuard,
-  ],
-  controllers: [],
-  exports: [AuthService, JwtAuthGuard, RolesGuard],
+        imports: [
+                MikroOrmModule.forFeature([UserEntity]),
+                DatabaseModule,
+                RedisModule,
+        ],
+        providers: [
+                //Services
+                AuthService,
+                JwtService,
+                //Strategies
+                JwtStrategy,
+                //Guards Globally applied
+                JwtAuthGuard,
+                RolesGuard,
+        ],
+        controllers: [],
+        exports: [AuthService, JwtAuthGuard, RolesGuard],
 })
 export class AuthModule {}

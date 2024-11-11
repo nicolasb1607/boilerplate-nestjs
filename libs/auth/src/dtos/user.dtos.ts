@@ -8,68 +8,68 @@ import { normalizeEmail } from 'libs/shared/functions/shared.functions';
 
 @Injectable()
 export class EmailDto {
-  @ApiProperty()
-  @IsEmail()
-  @Transform(({ value }) => normalizeEmail(value))
-  email!: string;
+        @ApiProperty()
+        @IsEmail()
+        @Transform(({ value }) => normalizeEmail(value))
+        email!: string;
 }
 
 @Injectable()
 export class UserRegistrationDto {
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  firstName!: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsString()
+        firstName!: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  lastName!: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsString()
+        lastName!: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsEmail()
-  @Transform(({ value }) => normalizeEmail(value))
-  email!: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsEmail()
+        @Transform(({ value }) => normalizeEmail(value))
+        email!: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  password!: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsString()
+        password!: string;
 
-  @ApiProperty()
-  @IsDate()
-  @Type(() => Date)
-  dateOfBirth: Date;
+        @ApiProperty()
+        @IsDate()
+        @Type(() => Date)
+        dateOfBirth: Date;
 
-  @ApiProperty({ enum: IdentityEnum })
-  @IsEnum(IdentityEnum)
-  identity: IdentityEnum;
+        @ApiProperty({ enum: IdentityEnum })
+        @IsEnum(IdentityEnum)
+        identity: IdentityEnum;
 
-  @ApiProperty()
-  @IsString()
-  postcode: string;
+        @ApiProperty()
+        @IsString()
+        postcode: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  address: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsString()
+        address: string;
 }
 
 @Injectable()
 export class UserLoginDto {
-  @ApiProperty()
-  @IsEmail()
-  @Transform(({ value }) => normalizeEmail(value))
-  email!: string;
+        @ApiProperty()
+        @IsEmail()
+        @Transform(({ value }) => normalizeEmail(value))
+        email!: string;
 
-  //@ApiProperty()
-  //@IsNotEmpty()
-  //@IsString()
-  //password!: string;
+        //@ApiProperty()
+        //@IsNotEmpty()
+        //@IsString()
+        //password!: string;
 
-  @ApiProperty()
-  @IsNotEmpty()
-  @IsString()
-  code!: string;
+        @ApiProperty()
+        @IsNotEmpty()
+        @IsString()
+        code!: string;
 }
