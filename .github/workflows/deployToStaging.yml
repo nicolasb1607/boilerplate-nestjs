@@ -98,6 +98,4 @@ jobs:
           scp -r -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ./dist/* ec2-user@$EC2_IP:./app
           ssh -o StrictHostKeyChecking=no -o ProxyCommand="ssh -o StrictHostKeyChecking=no ec2-user@$BASTION_IP -W %h:%p" ec2-user@$EC2_IP \
             "cd ./app \
-            && npm install -g pnpm \
-            && pnpm install \
-            && pnpm run start:prod"
+            node apps/api/main"
