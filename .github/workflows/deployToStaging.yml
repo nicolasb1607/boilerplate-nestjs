@@ -60,6 +60,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-3
 
+      - name: Install Pulumi CLI
+        run: |
+          curl -fsSL https://get.pulumi.com | sh
+          export PATH=$PATH:$HOME/.pulumi/bin
+          echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
+
+      - name: Install Pulumi Dependencies
+        working-directory: ./infra
+        run: |
+          npm install
+          npm install @pulumi/pulumi @pulumi/aws
+
       - name: Run Pulumi Preview
         uses: pulumi/actions@v6
         id: pulumi
