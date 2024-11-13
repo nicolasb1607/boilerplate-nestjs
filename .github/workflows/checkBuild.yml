@@ -1,4 +1,4 @@
-name: Check Build On Main Branch
+name: Checkout Build Stage On Main Branch
 on:
   pull_request:
     branches:
