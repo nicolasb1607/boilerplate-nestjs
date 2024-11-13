@@ -70,7 +70,9 @@ jobs:
         working-directory: ./infra
         run: |
           npm install
-          npm install @pulumi/pulumi @pulumi/aws
+          npm install @pulumi/pulumi @pulumi/aws typescript @types/node dotenv ts-node
+          npm install --save-dev @types/dotenv
+           
 
       - name: Run Pulumi Preview
         uses: pulumi/actions@v6
